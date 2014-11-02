@@ -76,6 +76,7 @@ void TCPFlowStat::addPacket(struct ip* ip, struct tcphdr* tcphdr, double ts){
     int pktdir=getPacketDirection(ip->ip_src.s_addr, ip->ip_dst.s_addr, tcphdr->source, tcphdr->dest);
     int tcpdatalen=ip->ip_len-ip->ip_hl*4-tcphdr->doff*4;
     //printf ("TCPDataLen:%d\n",tcpdatalen);
+    printStat();
     switch (tcpconnstate){
         case TCPCONSTATE_CLOSED: {
             if (tcphdr->syn==1 && tcphdr->ack!=1){
