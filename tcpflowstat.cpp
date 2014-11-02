@@ -75,7 +75,7 @@ void TCPFlowStat::addPacket(struct ip* ip, struct tcphdr* tcphdr, double ts){
     if (!isNewFlow(ip,tcphdr) && isMyPacket(ip, tcphdr)!=1) return;
     int pktdir=getPacketDirection(ip->ip_src.s_addr, ip->ip_dst.s_addr, tcphdr->source, tcphdr->dest);
     int tcpdatalen=ip->ip_len-ip->ip_hl*4-tcphdr->doff*4;
-
+    printf ("TCPDataLen:%d\n",tcpdatalen);
     switch (tcpconnstate){
         case TCPCONSTATE_CLOSED: {
             if (tcphdr->syn==1 && tcphdr->ack!=1){
@@ -182,7 +182,7 @@ void TCPFlowStat::addPacket(struct ip* ip, struct tcphdr* tcphdr, double ts){
             if (pktdir==PKTSENDER_CLT){
                 //calc metrics first
                 if (tcphdr->seq > cltseq){
-                    printf("client seq is greater than expected, may be pcap's fault.\n");
+                    //printf("client seq is greater than expected, may be pcap's fault.\n");
                 }
 
                 if (tcphdr->seq < cltseq){
@@ -193,7 +193,7 @@ void TCPFlowStat::addPacket(struct ip* ip, struct tcphdr* tcphdr, double ts){
 
                     cltretxbytes+=retxb;
                     cltretxnum+=1;
-                    printf("client retx %d bytes.\n", retxb);
+                    //printf("client retx %d bytes.\n", retxb);
                 };
 
                 //the last thing: update seq
@@ -221,7 +221,7 @@ void TCPFlowStat::addPacket(struct ip* ip, struct tcphdr* tcphdr, double ts){
 
                     svrretxbytes+=retxb;
                     svrretxnum+=1;
-                    printf("server retx %d bytes.\n", retxb);
+                    //printf("server retx %d bytes.\n", retxb);
                 };
 
                 //the last thing: update seq
