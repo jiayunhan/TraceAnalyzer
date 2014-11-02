@@ -66,7 +66,7 @@ char * TCPFlowStat::getStrAddr(u_int ip){
 }
 
 void TCPFlowStat::printStat(){
-    if (1 && strcmp(getStrAddr(cltip),"33.161.36.29")==0 && strcmp(getStrAddr(svrip),"10.170.231.69")==0)
+    //if (1 && strcmp(getStrAddr(cltip),"33.161.36.29")==0 && strcmp(getStrAddr(svrip),"10.170.231.69")==0)
     printf("\ncltip:%s svrip:%s cltport:%d svrport:%d cltseq:%u cltackseq:%u svrseq:%u svrackseq:%u\n",\
                        getStrAddr(cltip),getStrAddr(svrip), cltport,svrport,cltseq,cltackseq,svrseq,svrackseq);
 }
