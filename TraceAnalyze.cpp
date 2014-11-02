@@ -229,7 +229,7 @@ void TraceAnalyze::feedTracePacket(Context ctx, const struct pcap_pkthdr *header
 			      switch(ip->ip_p){
 				  case 0x06:{
 						//TCP
-						printf("%d,ipv4:TCP\n",pktcnt);
+						//printf("%d,ipv4:TCP\n",pktcnt);
             struct tcphdr* tcphdr = (struct tcphdr*)(gtpdatap+ip->ip_hl*4);
             bswapTCP(tcphdr);
 
