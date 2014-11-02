@@ -230,6 +230,23 @@ void TraceAnalyze::feedTracePacket(Context ctx, const struct pcap_pkthdr *header
 				  case 0x06:{
 						//TCP
 						printf("%d,ipv4:TCP\n",pktcnt);
+            struct tcphdr* tcphdr = (struct tcphdr*)(gtpdatap+ip->ip_hl*4);
+            bswapTCP(tcphdr);
+
+            int belongsToSomeone = 0;
+            for (int i=0; i<tcpflows.size();i++){
+              if(tcpflows[i]->isMyPacket(ip,tcphdr)==1){
+                tcpflows[i] -> addPacket(ip,tcphdr,ts);
+                belongsToSomeone = 1;
+              }
+            }
+            if(belongsToSomeone==0 && TCPFlowStat::isNewFlow(ip,tcphdr)==1){
+              struct TCPFlowStat* tfs = (TCPFlowStat*) malloc (sizeof(struct TCPFlowStat));
+              tfs->addPacket (ip,tcphdr,ts);
+              tcpflows.push_back(tfs);
+            }
+
+
 						break;
 					    }
 				  case 0x11:{
