@@ -250,11 +250,11 @@ void TraceAnalyze::feedTracePacket(Context ctx, const struct pcap_pkthdr *header
 						break;
 					    }
 				  case 0x11:{
-						printf("%d,ipv4:UDP\n",pktcnt);
+						//printf("%d,ipv4:UDP\n",pktcnt);
 						break;
 					    }
 				  default:{
-					      printf("%d,ipv4: neither TCP or UDP\n",pktcnt);
+					      //printf("%d,ipv4: neither TCP or UDP\n",pktcnt);
 					  }
 						
 			      }
@@ -272,21 +272,21 @@ void TraceAnalyze::feedTracePacket(Context ctx, const struct pcap_pkthdr *header
 			      //std::cout<<std::hex<<ip6->ip6_ctlun.ip6_un1.ip6_un1_nxt<<endl;
 			      switch(ip6->ip6_ctlun.ip6_un1.ip6_un1_nxt){
 			      case  0x06:{
-					     printf("%d,ipv6:TCP\n",pktcnt);
+					     //printf("%d,ipv6:TCP\n",pktcnt);
 					     break;
 					 }
 			      case 0x11:{
-					    printf("%d,ipv6:UDP\n",pktcnt);
+					    //printf("%d,ipv6:UDP\n",pktcnt);
 					    break;
 					}
 			      default:{
-					  printf("%d,ipv6: neither TCP or UDP\n",pktcnt);
+					  //printf("%d,ipv6: neither TCP or UDP\n",pktcnt);
 				      }
 			      }
 			      break;
 			  }
 		default:{
-			    printf("%d:neither\n",pktcnt);
+			    //printf("%d:neither\n",pktcnt);
 			}
 	    }
 	};break;
