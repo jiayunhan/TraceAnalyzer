@@ -66,7 +66,7 @@ char * TCPFlowStat::getStrAddr(u_int ip){
 }
 
 void TCPFlowStat::printStat(){
-    if (0 && strcmp(getStrAddr(cltip),"192.168.1.139")==0 && strcmp(getStrAddr(svrip),"31.13.74.144")==0)
+    if (1 && strcmp(getStrAddr(cltip),"192.168.1.139")==0 && strcmp(getStrAddr(svrip),"31.13.74.144")==0)
     printf("\ncltip:%s svrip:%s cltport:%d svrport:%d cltseq:%u cltackseq:%u svrseq:%u svrackseq:%u\n",\
                        getStrAddr(cltip),getStrAddr(svrip), cltport,svrport,cltseq,cltackseq,svrseq,svrackseq);
 }
@@ -75,7 +75,7 @@ void TCPFlowStat::addPacket(struct ip* ip, struct tcphdr* tcphdr, double ts){
     if (!isNewFlow(ip,tcphdr) && isMyPacket(ip, tcphdr)!=1) return;
     int pktdir=getPacketDirection(ip->ip_src.s_addr, ip->ip_dst.s_addr, tcphdr->source, tcphdr->dest);
     int tcpdatalen=ip->ip_len-ip->ip_hl*4-tcphdr->doff*4;
-    printf ("TCPDataLen:%d\n",tcpdatalen);
+    //printf ("TCPDataLen:%d\n",tcpdatalen);
     switch (tcpconnstate){
         case TCPCONSTATE_CLOSED: {
             if (tcphdr->syn==1 && tcphdr->ack!=1){
@@ -211,7 +211,7 @@ void TCPFlowStat::addPacket(struct ip* ip, struct tcphdr* tcphdr, double ts){
             if (pktdir==PKTSENDER_SVR){
 
                 if (tcphdr->seq > svrseq){
-                    printf("svr seq is greater than expected, some server data are delayed or lost.\n");
+                    //printf("svr seq is greater than expected, some server data are delayed or lost.\n");
                 }
 
                 if (tcphdr->seq < svrseq) {
