@@ -88,8 +88,7 @@ void TCPFlowStat::addPacket(struct ip* ip, struct tcphdr* tcphdr, double ts){
                 cltseq=tcphdr->seq;
                 svrackseq=tcphdr->seq+1; cltinitseq=tcphdr->seq+1;
                 flowinitby=FLOWINITBYCLT;
-
-
+                printf ("CLOSED:");
                 printStat();
 
                 tcpconnstate=TCPCONSTATE_SYN_SEND;
@@ -107,6 +106,7 @@ void TCPFlowStat::addPacket(struct ip* ip, struct tcphdr* tcphdr, double ts){
                 cltseq=tcphdr->ack_seq;
 
                 tcpconnstate=TCPCONSTATE_SYN_RECEIVED;
+                printf ("SYN_SEND1:");
                 printStat();
             }
             else if (tcphdr->syn==1 && tcphdr->ack!=1 && pktdir==PKTSENDER_SVR){
@@ -116,6 +116,7 @@ void TCPFlowStat::addPacket(struct ip* ip, struct tcphdr* tcphdr, double ts){
                 cltackseq=tcphdr->seq+1; svrinitseq=tcphdr->seq+1;
 
                 tcpconnstate=TCPCONSTATE_SYN_RECEIVED;
+                printf ("SYN_SEND2:");
                 printStat();
             }
             else{
@@ -129,6 +130,7 @@ void TCPFlowStat::addPacket(struct ip* ip, struct tcphdr* tcphdr, double ts){
                 synacktoacktime=acktime-synacktime;
                 if (synacktoacktime>syntosynacktime){
                 //the server side is the local device
+
                     swapcltsvr();
                     flowinitby=FLOWINITBYSVR;
                 }
@@ -146,6 +148,7 @@ void TCPFlowStat::addPacket(struct ip* ip, struct tcphdr* tcphdr, double ts){
                     svrackseq=tcphdr->ack_seq;
                     cltseq=tcphdr->ack_seq;
                 }
+                printf ("SYN_RECEIVED1:");
                 printStat();
 
                 tcpconnstate=TCPCONSTATE_ESTABLISHED;
@@ -205,7 +208,7 @@ void TCPFlowStat::addPacket(struct ip* ip, struct tcphdr* tcphdr, double ts){
                 if (tcphdr->ack_seq >= cltackseq) {
                     cltackseq=tcphdr->ack_seq;
                 };
-
+                printf ("ESTABLISHED1:");
                 printStat();
             };
 
@@ -235,6 +238,7 @@ void TCPFlowStat::addPacket(struct ip* ip, struct tcphdr* tcphdr, double ts){
                 if (tcphdr->ack_seq >= svrackseq) {
                     svrackseq=tcphdr->ack_seq;
                 };
+                printf ("SYN_RECEIVED2:");
                 printStat();
 
             };
